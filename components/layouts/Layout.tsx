@@ -18,7 +18,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, title }) => {
             </Head>
 
             <Navbar />
-            <main className="px-5">
+            <main className="p-5">
                 {children}
             </main>
         </>
