@@ -1,58 +1,41 @@
+import { magicApi } from '@/api'
 import { Layout } from '@/components/layouts'
-import { NextPage,GetStaticPaths,GetStaticProps } from 'next'
-import React from 'react'
-
-interface Props{
-    card: string
-}
+import { CardInfo } from '@/interfaces'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 
 
-const Card: NextPage<Props> = ({card}) => {
+const Card: NextPage = () => {
 
+    const router = useRouter()
+
+    const [card, setCard] = useState<CardInfo>()
     console.log(card);
-    
+
+    useEffect(() => {
+        magicApi.get<CardInfo>(`/cards/named?fuzzy=${router.query?.card}`)
+            .then((data) => setCard(data?.data))
+    }, [])
+
+
 
     return (
         <Layout>
+            <div className='flex justify-between'>
+                <div className='w-3/12'>
+                    <img src={card?.image_uris?.normal} alt={card?.name} />
+                </div>
+                <div className='w-8/12 bg-slate-300 p-4 rounded-md'>
+                    <h2 className='text-3xl'> {card?.name} </h2>
+                    <p className='font-semibold'> {card?.type_line} </p>
+                    <p> Precio: ${card?.prices?.usd} </p>
+                    <p className='font-serif'> {card?.flavor_text} </p>
+                </div>
+            </div>
 
         </Layout>
     )
 }
-
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-
-export const getStaticPaths: GetStaticPaths = async (ctx) => {
-
-
-    return {
-        paths: [
-            {
-                params: {
-                    card: 'pepe'
-                }
-            }
-        ],
-        fallback: "blocking"
-    }
-}
-
-// You should use getStaticProps when:
-//- The data required to render the page is available at build time ahead of a user’s request.
-//- The data comes from a headless CMS.
-//- The data can be publicly cached (not user-specific).
-//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-
-    console.log(ctx.params)
-
-    return {
-        props: {
-            
-        }
-    }
-}
-
-
 
 export default Card

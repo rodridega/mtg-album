@@ -9,7 +9,7 @@ export const Navbar = () => {
             <Link href={'/'} className="text-xl cursor-pointer"><span className="text-3xl">M</span>agic</Link>
 
             <div className="flex-1"></div>
-            <p>Favoritos</p>
+            <Link href={'/favorites'}>Favoritos</Link>
         </div>
     )
 }

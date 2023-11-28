@@ -3,8 +3,8 @@ export interface CardInfo {
     id:                string;
     oracle_id:         string;
     multiverse_ids:    number[];
-    tcgplayer_id:      number;
-    cardmarket_id:     number;
+    mtgo_id:           number;
+    mtgo_foil_id:      number;
     name:              string;
     lang:              string;
     released_at:       Date;
@@ -22,7 +22,7 @@ export interface CardInfo {
     toughness:         string;
     colors:            string[];
     color_identity:    string[];
-    keywords:          string[];
+    keywords:          any[];
     legalities:        Legalities;
     games:             string[];
     reserved:          boolean;
@@ -45,14 +45,13 @@ export interface CardInfo {
     collector_number:  string;
     digital:           boolean;
     rarity:            string;
+    flavor_text:       string;
     card_back_id:      string;
     artist:            string;
     artist_ids:        string[];
     illustration_id:   string;
     border_color:      string;
     frame:             string;
-    frame_effects:     string[];
-    security_stamp:    string;
     full_art:          boolean;
     textless:          boolean;
     booster:           boolean;
